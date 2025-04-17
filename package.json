@@ -1,0 +1,50 @@
+{
+  "name": "real-estate-website",
+  "version": "1.0.0",
+  "description": "A dynamic real estate website built with React.js and Tailwind CSS.",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "keywords": [
+    "real-estate",
+    "react",
+    "tailwind-css"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^5.0.1",
+    "redux": "^4.1.0",
+    "tailwindcss": "^2.2.19"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.27.0",
+    "@babel/preset-react": "^7.26.3",
+    "autoprefixer": "^10.3.7",
+    "eslint": "^7.32.0",
+    "eslint-plugin-react": "^7.27.1",
+    "postcss": "^8.3.6"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
