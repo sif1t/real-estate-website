@@ -56,19 +56,19 @@ const FeaturedProperties = () => {
     // Get enhanced property images based on property type
     const getEnhancedPropertyImages = (property) => {
         const baseImages = getPropertyGalleryImages(property);
-        
+
         // If we already have good images, use them
         if (baseImages?.length > 0 && baseImages[0].startsWith('http')) {
             return baseImages;
         }
-        
+
         // Otherwise provide high-quality images based on property type
         const propertyType = property?.type?.toLowerCase() || 'default';
         const enhancedImageSet = getHighQualityPropertyImages(propertyType);
-        
+
         return enhancedImageSet;
     };
-    
+
     // High-quality property images based on type
     const getHighQualityPropertyImages = (type) => {
         const imagesByType = {
