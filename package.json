@@ -17,6 +17,7 @@
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
+    "@react-google-maps/api": "^2.20.6",
     "axios": "^0.21.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

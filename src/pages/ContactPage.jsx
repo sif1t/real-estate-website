@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../components/common/Layout';
 import ContactForm from '../components/forms/ContactForm';
 import SEO from '../components/common/SEO';
+import MapView from '../components/common/MapView';
 
 const ContactPage = () => {
     return (
@@ -64,9 +65,12 @@ const ContactPage = () => {
                                 </div>
                             </div>
 
-                            {/* Map placeholder */}
-                            <div className="mt-8 bg-gray-200 rounded-lg h-56 flex items-center justify-center">
-                                <p className="text-gray-500">Map View</p>
+                            {/* Interactive Map */}
+                            <div className="mt-8 h-56 rounded-lg overflow-hidden">
+                                <MapView
+                                    location="123 Real Estate Blvd, New York, NY 10001"
+                                    zoom={15}
+                                />
                             </div>
 
                             {/* Social Media */}
