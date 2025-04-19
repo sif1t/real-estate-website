@@ -443,12 +443,102 @@ const getMockBlogPosts = () => [
         id: 3,
         title: 'Real Estate Investment Strategies for 2023',
         excerpt: 'Discover the most promising real estate investment approaches for the current market conditions.',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Nullam auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.',
-        author: 'Jennifer Lee',
-        date: '2023-01-10',
-        image: '/images/blog/blog3.jpg',
-        category: 'Investment'
-    }
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Nullam auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.',
+    author: 'Jennifer Lee',
+    date: '2023-01-10',
+    image: '/images/blog/blog3.jpg',
+    category: 'Investment'
+},
+{
+    id: 4,
+    title: 'Understanding Mortgage Pre-Approval: Why It Matters',
+    excerpt: 'Learn why getting pre-approved for a mortgage can give you a competitive edge in today\'s real estate market.',
+    content: 'Getting pre-approved for a mortgage is a crucial first step in the home buying process. It gives you a clear understanding of your budget, demonstrates to sellers that youre a serious buyer, and can help expedite the closing process once your offer is accepted.This article explores the pre- approval process and its benefits.',
+    author: 'David Martinez',
+    date: '2023-04-05',
+    image: '/images/blog/blog4.jpg',
+    category: 'Buying'
+},
+{
+    id: 5,
+    title: 'How to Spot a Good Neighborhood for Long-Term Value',
+    excerpt: 'Discover the key indicators that a neighborhood will maintain or increase in value over time.',
+    content: 'When buying a home, the location is just as important as the property itself. This guide helps you identify neighborhoods with strong prospects for long-term appreciation, including factors like school quality, infrastructure development, and economic indicators.',
+    author: 'Emily Wilson',
+    date: '2023-05-12',
+    image: '/images/blog/blog5.jpg',
+    category: 'Buying'
+},
+{
+    id: 6,
+        title: 'The Hidden Costs of Buying a Home',
+            excerpt: 'Beyond the down payment and mortgage, learn about the additional expenses that come with homeownership.',
+                content: 'Many first-time homebuyers focus solely on the purchase price, but owning a home involves numerous additional expenses. From closing costs and property taxes to maintenance and homeowners insurance, this article breaks down all the costs you should budget for.',
+                    author: 'Robert Chen',
+                        date: '2023-06-20',
+                            image: '/images/blog/blog6.jpg',
+                                category: 'Buying'
+},
+{
+    id: 7,
+        title: 'When Is the Best Time to Sell Your Home?',
+            excerpt: 'A data-driven analysis of seasonal trends in the real estate market to maximize your selling price.',
+                content: 'Timing can significantly impact your home selling success. This article examines historical market data to identify the optimal seasons and months for listing your property, accounting for factors like inventory levels, buyer activity, and regional differences.',
+                    author: 'Sophia Patel',
+                        date: '2023-02-18',
+                            image: '/images/blog/blog7.jpg',
+                                category: 'Selling'
+},
+{
+    id: 8,
+        title: 'Renovations That Boost Your Home\'s Value',
+            excerpt: 'Not all improvements offer equal returns. Discover which upgrades give you the best ROI when selling.',
+                content: 'Before putting your home on the market, strategic renovations can significantly increase its value. This guide explores the most cost-effective improvements, from kitchen updates and bathroom remodels to simple cosmetic changes that make a big difference.',
+                    author: 'James Wilson',
+                        date: '2023-03-25',
+                            image: '/images/blog/blog8.jpg',
+                                category: 'Selling'
+},
+{
+    id: 9,
+        title: 'Pricing Your Home to Sell: Strategies That Work',
+            excerpt: 'Learn how to set the optimal asking price for your property to attract buyers without leaving money on the table.',
+                content: 'Determining the right price for your home is both an art and a science. This article covers crucial pricing strategies, including comparative market analysis, pricing psychology, and how to anticipate buyer behavior in different market conditions.',
+                    author: 'Olivia Rodriguez',
+                        date: '2023-05-05',
+                            image: '/images/blog/blog9.jpg',
+                                category: 'Selling'
+},
+{
+    id: 10,
+        title: 'REITs vs. Direct Property Ownership: Pros and Cons',
+            excerpt: 'Compare these two popular real estate investment approaches to determine which best suits your goals and resources.',
+                content: 'Real estate investors have multiple options for adding property to their portfolios. This comparison examines the advantages and disadvantages of Real Estate Investment Trusts (REITs) versus directly owning investment properties, considering factors like liquidity, management requirements, and potential returns.',
+                    author: 'Benjamin Kim',
+                        date: '2023-02-02',
+                            image: '/images/blog/blog10.jpg',
+                                category: 'Investment'
+},
+{
+    id: 11,
+        title: 'Commercial Real Estate Investment Fundamentals',
+            excerpt: 'A beginner\'s guide to investing in commercial properties and understanding the key metrics for success.',
+                content: 'Commercial real estate can offer attractive investment returns but requires specialized knowledge. This comprehensive guide covers property types, valuation methods, financing options, and the essential metrics investors should analyze before committing to a commercial property.',
+                    author: 'Isabella Morgan',
+                        date: '2023-04-15',
+                            image: '/images/blog/blog11.jpg',
+                                category: 'Investment'
+},
+{
+    id: 12,
+        title: 'Building a Profitable Rental Property Portfolio',
+            excerpt: 'Learn the strategies professional investors use to create sustainable income through rental properties.',
+                content: 'Creating a successful rental property portfolio requires careful planning and strategic execution. This article outlines the step-by-step process for building a profitable portfolio, from identifying promising markets and properties to efficient management practices and scaling your investments over time.',
+                    author: 'Ethan Thompson',
+                        date: '2023-05-30',
+                            image: '/images/blog/blog12.jpg',
+                                category: 'Investment'
+}
 ];
 
 const getMockImages = (propertyId) => {
