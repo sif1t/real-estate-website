@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropertyList from '../components/property/PropertyList';
 import Loading from '../components/common/Loading';
+import Layout from '../components/common/Layout';
 import { fetchProperties } from '../services/api';
 
 const PropertyListingPage = () => {
@@ -32,10 +33,12 @@ const PropertyListingPage = () => {
     }
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Property Listings</h1>
-            <PropertyList properties={properties} />
-        </div>
+        <Layout>
+            <div className="container mx-auto p-4">
+                <h1 className="text-2xl font-bold mb-4">Property Listings</h1>
+                <PropertyList properties={properties} />
+            </div>
+        </Layout>
     );
 };
 
