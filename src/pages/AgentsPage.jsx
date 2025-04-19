@@ -35,9 +35,18 @@ const AgentsPage = () => {
         ? [...new Set(agents.map(agent => agent.specialization))]
         : [];
 
-    // Filter agents based on search term and selected specialization
+    // Enhanced filter functionality - search across name, bio, and specialization
     const filteredAgents = agents.filter(agent => {
-        const matchesSearch = agent.name.toLowerCase().includes(searchTerm.toLowerCase());
+        // Convert search term to lowercase for case-insensitive matching
+        const search = searchTerm.toLowerCase();
+
+        // Check if search term matches name, bio, or specialization
+        const matchesSearch =
+            agent.name.toLowerCase().includes(search) ||
+            agent.bio.toLowerCase().includes(search) ||
+            agent.specialization.toLowerCase().includes(search);
+
+        // Check if specialization filter matches
         const matchesSpecialization = selectedSpecialization === '' ||
             agent.specialization === selectedSpecialization;
 

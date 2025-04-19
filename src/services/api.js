@@ -193,7 +193,7 @@ const getMockProperties = () => [
         images: ['/images/property5.jpg'],
         featured: false,
         type: 'Loft',
-        status: 'For Sale'     
+        status: 'For Sale'
     },
     {
         id: 6,
@@ -301,7 +301,7 @@ const getMockAgents = () => [
         name: 'Sarah Johnson',
         email: 'sarah.johnson@example.com',
         phone: '(555) 123-4567',
-        photo: '/images/agents/agent1.jpg',
+        photo: 'https://randomuser.me/api/portraits/women/32.jpg',
         bio: 'Sarah has over 10 years of experience in luxury real estate.',
         specialization: 'Luxury Properties',
         listings: 24
@@ -311,7 +311,7 @@ const getMockAgents = () => [
         name: 'Michael Rodriguez',
         email: 'michael.rodriguez@example.com',
         phone: '(555) 987-6543',
-        photo: '/images/agents/agent2.jpg',
+        photo: 'https://randomuser.me/api/portraits/men/45.jpg',
         bio: 'Michael specializes in commercial properties and investment opportunities.',
         specialization: 'Commercial Real Estate',
         listings: 18
@@ -321,10 +321,100 @@ const getMockAgents = () => [
         name: 'Jennifer Lee',
         email: 'jennifer.lee@example.com',
         phone: '(555) 234-5678',
-        photo: '/images/agents/agent3.jpg',
+        photo: 'https://randomuser.me/api/portraits/women/18.jpg',
         bio: 'Jennifer helps first-time homebuyers find their perfect starter homes.',
         specialization: 'Residential Properties',
         listings: 32
+    },
+    {
+        id: 4,
+        name: 'David Martinez',
+        email: 'david.martinez@example.com',
+        phone: '(555) 456-7890',
+        photo: 'https://randomuser.me/api/portraits/men/33.jpg',
+        bio: 'David is an expert in urban development and modern city living options.',
+        specialization: 'Urban Properties',
+        listings: 27
+    },
+    {
+        id: 5,
+        name: 'Emily Wilson',
+        email: 'emily.wilson@example.com',
+        phone: '(555) 567-8901',
+        photo: 'https://randomuser.me/api/portraits/women/27.jpg',
+        bio: 'Emily specializes in vacation rentals and second homes in desirable locations.',
+        specialization: 'Vacation Properties',
+        listings: 21
+    },
+    {
+        id: 6,
+        name: 'Robert Chen',
+        email: 'robert.chen@example.com',
+        phone: '(555) 678-9012',
+        photo: 'https://randomuser.me/api/portraits/men/77.jpg',
+        bio: 'Robert has 15 years of experience helping clients with luxury estate investments.',
+        specialization: 'Estate Properties',
+        listings: 15
+    },
+    {
+        id: 7,
+        name: 'Sophia Patel',
+        email: 'sophia.patel@example.com',
+        phone: '(555) 789-0123',
+        photo: 'https://randomuser.me/api/portraits/women/23.jpg',
+        bio: 'Sophia is an expert in sustainable and eco-friendly housing options.',
+        specialization: 'Green Properties',
+        listings: 22
+    },
+    {
+        id: 8,
+        name: 'James Wilson',
+        email: 'james.wilson@example.com',
+        phone: '(555) 890-1234',
+        photo: 'https://randomuser.me/api/portraits/men/42.jpg',
+        bio: 'James focuses on helping families find the perfect home in top school districts.',
+        specialization: 'Family Homes',
+        listings: 29
+    },
+    {
+        id: 9,
+        name: 'Olivia Rodriguez',
+        email: 'olivia.rodriguez@example.com',
+        phone: '(555) 901-2345',
+        photo: 'https://randomuser.me/api/portraits/women/36.jpg',
+        bio: 'Olivia specializes in historic properties and heritage renovations.',
+        specialization: 'Historic Properties',
+        listings: 17
+    },
+    {
+        id: 10,
+        name: 'Benjamin Kim',
+        email: 'benjamin.kim@example.com',
+        phone: '(555) 012-3456',
+        photo: 'https://randomuser.me/api/portraits/men/51.jpg',
+        bio: 'Benjamin has extensive experience in luxury apartment and penthouse sales.',
+        specialization: 'Luxury Apartments',
+        listings: 26
+    },
+    {
+        id: 11,
+        name: 'Isabella Morgan',
+        email: 'isabella.morgan@example.com',
+        phone: '(555) 123-4560',
+        photo: 'https://randomuser.me/api/portraits/women/49.jpg',
+        bio: 'Isabella is a specialist in waterfront properties and maritime living.',
+        specialization: 'Waterfront Properties',
+        listings: 14
+    },
+    {
+        id: 12,
+        name: 'Ethan Thompson',
+        email: 'ethan.thompson@example.com',
+        phone: '(555) 234-5671',
+        photo: 'https://randomuser.me/api/portraits/men/22.jpg',
+        bio: 'Ethan focuses on rural properties, farms, and ranches for buyers seeking a countryside lifestyle.',
+        specialization: 'Rural Properties',
+        listings: 19
     }
 ];
 

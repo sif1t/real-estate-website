@@ -15,9 +15,9 @@ const NotFoundPage = () => {
                 <h2 className="text-3xl font-semibold mb-4">Page Not Found</h2>
                 <p className="text-gray-600 mb-8">
                     The property or page you are looking for might have been removed,
-                    is temporarily unavailable, or doesn't exist.
+                    is temporarily unavailable, or doesnt exist.
                 </p>
-
+        
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link
                         to="/"
