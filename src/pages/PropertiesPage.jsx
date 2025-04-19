@@ -3,6 +3,7 @@ import { fetchProperties } from '../services/propertyService';
 import PropertyList from '../components/property/PropertyList';
 import PropertyFilters from '../components/property/PropertyFilters';
 import SEO from '../components/common/SEO';
+import { getPropertyGalleryImages } from '../utils/imageImports';
 
 const PropertiesPage = () => {
     const [properties, setProperties] = useState([]);
@@ -26,8 +27,15 @@ const PropertiesPage = () => {
                 throw new Error("No property data received from the server");
             }
 
-            setProperties(data);
-            setFilteredProperties(data);
+            // Add images to each property
+            const propertiesWithImages = data.map(property => {
+                // Get the property images using our utility
+                const images = getPropertyGalleryImages(property);
+                return { ...property, images };
+            });
+
+            setProperties(propertiesWithImages);
+            setFilteredProperties(propertiesWithImages);
         } catch (err) {
             console.error("Failed to load properties:", err);
             setError(err.message || "Failed to load properties. Please try again later.");

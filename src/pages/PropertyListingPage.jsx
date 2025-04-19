@@ -3,6 +3,7 @@ import PropertyList from '../components/property/PropertyList';
 import Loading from '../components/common/Loading';
 import Layout from '../components/common/Layout';
 import { fetchProperties } from '../services/api';
+import { getPropertyGalleryImages } from '../utils/imageImports';
 
 const PropertyListingPage = () => {
     const [properties, setProperties] = useState([]);
@@ -13,7 +14,14 @@ const PropertyListingPage = () => {
         const getProperties = async () => {
             try {
                 const data = await fetchProperties();
-                setProperties(data);
+
+                // Add images to each property
+                const propertiesWithImages = data.map(property => {
+                    const images = getPropertyGalleryImages(property);
+                    return { ...property, images };
+                });
+
+                setProperties(propertiesWithImages);
             } catch (err) {
                 setError(err.message);
             } finally {

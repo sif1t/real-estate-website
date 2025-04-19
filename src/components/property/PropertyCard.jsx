@@ -61,7 +61,7 @@ const PropertyCard = ({ property }) => {
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
             <Link to={propertyLink}>
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-64 overflow-hidden">
                     {isLoading ? (
                         <div className="w-full h-full bg-gray-200 animate-pulse flex items-center justify-center">
                             <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -72,10 +72,11 @@ const PropertyCard = ({ property }) => {
                         <img
                             src={imageUrl}
                             alt={title}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                             onError={(e) => {
                                 e.target.onerror = null; // Prevent infinite loop
-                                e.target.src = `https://placehold.co/600x400?text=${type}`;
+                                const typeText = type || 'Property';
+                                e.target.src = propertyTypePlaceholders[type.toLowerCase()] || `https://placehold.co/600x400?text=${typeText}`;
                             }}
                         />
                     )}
@@ -100,13 +101,14 @@ const PropertyCard = ({ property }) => {
                         </div>
                         <div className="flex items-center">
                             <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd"></path>
+                                <path d="M13 7H7v6h6V7z" />
+                                <path fillRule="evenodd" d="M7 2a1 1 0 00-1 1v1H2a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2h-4V3a1 1 0 00-1-1H7zm7 5V5H6v2h8z" clipRule="evenodd" />
                             </svg>
                             <span>{bathrooms} {bathrooms === 1 ? 'Bath' : 'Baths'}</span>
                         </div>
                         <div className="flex items-center">
                             <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd"></path>
+                                <path fillRule="evenodd" d="M5 2a1 1 0 00-1 1v16a1 1 0 001 1h10a1 1 0 001-1V3a1 1 0 00-1-1H5zm9 1H6v14h8V3z" clipRule="evenodd" />
                             </svg>
                             <span>{area} sq ft</span>
                         </div>
@@ -119,6 +121,17 @@ const PropertyCard = ({ property }) => {
             </Link>
         </div>
     );
+};
+
+// Add propertyTypePlaceholders here to have direct access in this component
+const propertyTypePlaceholders = {
+    apartment: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80',
+    villa: 'https://images.unsplash.com/photo-1613977257363-707004c259fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80',
+    house: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80',
+    condo: 'https://images.unsplash.com/photo-1594484208280-efa00f96fc21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80',
+    brownstone: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80',
+    penthouse: 'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80',
+    default: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80'
 };
 
 export default PropertyCard;

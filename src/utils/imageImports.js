@@ -5,6 +5,17 @@
  * This utility automatically imports property images from the assets directory
  */
 
+// Property type to image mapping with high-quality placeholder URLs
+const propertyTypePlaceholders = {
+    apartment: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80',
+    villa: 'https://images.unsplash.com/photo-1613977257363-707004c259fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80',
+    house: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80',
+    condo: 'https://images.unsplash.com/photo-1594484208280-efa00f96fc21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80',
+    brownstone: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80',
+    penthouse: 'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80',
+    default: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80'
+};
+
 // Import all property images dynamically
 const importAll = (r) => {
     let images = {};
@@ -62,26 +73,30 @@ export const getPropertyImage = (property, index = 0) => {
     }
 
     // Fallback to a placeholder
-    return getPlaceholderImage(typeKey, id);
+    return getPlaceholderImage(typeKey);
 };
 
 /**
  * Get a placeholder image for a property type
  * @param {string} type - Property type (apartment, house, villa, etc.)
- * @param {number|string} id - Optional ID to make the placeholder unique
  * @returns {string} - URL to a placeholder image
  */
-export const getPlaceholderImage = (type = 'property', id = '') => {
+export const getPlaceholderImage = (type = 'property') => {
     // First check if we have a generic type image
     const genericTypeImageKey = `${type}.jpg`;
+    const normalizedType = type.toLowerCase();
 
     if (propertyImages[genericTypeImageKey]) {
         return propertyImages[genericTypeImageKey];
     }
 
-    // Otherwise, generate a placeholder URL
-    const idSuffix = id ? `+${id}` : '';
-    return `https://placehold.co/800x600?text=${type}${idSuffix}`;
+    // Check if we have a predefined placeholder for this type
+    if (propertyTypePlaceholders[normalizedType]) {
+        return propertyTypePlaceholders[normalizedType];
+    }
+
+    // Default to the general property placeholder
+    return propertyTypePlaceholders.default;
 };
 
 /**
@@ -117,7 +132,7 @@ export const getPropertyGalleryImages = (property) => {
 
     // If no images were found, use a placeholder
     if (images.length === 0) {
-        images.push(getPlaceholderImage(typeKey, id));
+        images.push(getPlaceholderImage(typeKey));
     }
 
     return images;

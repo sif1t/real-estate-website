@@ -5,6 +5,7 @@ import PropertyList from '../components/property/PropertyList';
 import Loading from '../components/common/Loading';
 import SEO from '../components/common/SEO';
 import { searchProperties } from '../services/propertyService';
+import { getPropertyGalleryImages } from '../utils/imageImports';
 
 const SearchResultsPage = () => {
     const location = useLocation();
@@ -22,7 +23,14 @@ const SearchResultsPage = () => {
             try {
                 setLoading(true);
                 const results = await searchProperties(query);
-                setSearchResults(results);
+
+                // Add images to each property in search results
+                const resultsWithImages = results.map(property => {
+                    const images = getPropertyGalleryImages(property);
+                    return { ...property, images };
+                });
+
+                setSearchResults(resultsWithImages);
                 setLoading(false);
             } catch (err) {
                 setError(err.message);

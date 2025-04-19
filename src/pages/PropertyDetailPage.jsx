@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import PropertyDetails from '../components/property/PropertyDetails';
 import Loading from '../components/common/Loading';
 import { fetchPropertyById } from '../services/propertyService';
+import { getPropertyGalleryImages } from '../utils/imageImports';
 
 const PropertyDetailPage = () => {
     const { id } = useParams();
@@ -14,7 +15,12 @@ const PropertyDetailPage = () => {
         const getProperty = async () => {
             try {
                 const data = await fetchPropertyById(id);
-                setProperty(data);
+
+                // Add gallery images to the property
+                const images = getPropertyGalleryImages(data);
+                const propertyWithImages = { ...data, images };
+
+                setProperty(propertyWithImages);
             } catch (err) {
                 setError(err.message);
             } finally {
