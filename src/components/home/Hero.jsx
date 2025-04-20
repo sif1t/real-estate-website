@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Hero = () => {
     const history = useHistory();
@@ -28,10 +29,30 @@ const Hero = () => {
             <div className="absolute inset-0 bg-black bg-opacity-50"></div>
             <div className="container mx-auto px-4 h-full flex items-center relative z-10">
                 <div className="max-w-2xl text-white">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">Find Your Dream Home</h1>
-                    <p className="text-xl mb-8">Discover the perfect property that fits your lifestyle and budget</p>
+                    <motion.h1
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7 }}
+                        className="text-4xl md:text-5xl font-bold mb-4"
+                    >
+                        Find Your Dream Home
+                    </motion.h1>
 
-                    <div className="bg-white p-5 rounded-lg shadow-lg">
+                    <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.3 }}
+                        className="text-xl mb-8"
+                    >
+                        Discover the perfect property that fits your lifestyle and budget
+                    </motion.p>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.5 }}
+                        className="bg-white p-5 rounded-lg shadow-lg"
+                    >
                         <div className="flex flex-col md:flex-row gap-4 mb-4">
                             <select
                                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-gray-800"
@@ -81,13 +102,16 @@ const Hero = () => {
                             </select>
                         </div>
 
-                        <button
+                        <motion.button
                             onClick={handleSearch}
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.97 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
                             className="w-full block text-center bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-4 rounded-md transition-colors"
                         >
                             Search Properties
-                        </button>
-                    </div>
+                        </motion.button>
+                    </motion.div>
                 </div>
             </div>
         </section>

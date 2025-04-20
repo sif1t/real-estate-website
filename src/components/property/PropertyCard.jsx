@@ -65,7 +65,7 @@ const PropertyCard = ({ property }) => {
     }, [property, images]);
 
     // Fallback ID for link if id is missing
-    const propertyLink = id !== 'unknown' ? `/properties/${id}` : '#';
+    const propertyLink = id !== 'unknown' ? `/property/${id}` : '#';
 
     const handleImageError = () => {
         setImageError(true);
@@ -75,7 +75,7 @@ const PropertyCard = ({ property }) => {
     };
 
     return (
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
             <Link to={propertyLink} className="block relative">
                 <div className="relative h-64 overflow-hidden">
                     {isLoading ? (
