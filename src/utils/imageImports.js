@@ -16,6 +16,50 @@ const propertyTypePlaceholders = {
     default: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80'
 };
 
+// High-quality property images with multiple photos per type (for carousels, galleries, etc.)
+const highQualityPropertyImages = {
+    apartment: [
+        'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80'
+    ],
+    villa: [
+        'https://images.unsplash.com/photo-1613977257363-707004c259fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80'
+    ],
+    house: [
+        'https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80'
+    ],
+    condo: [
+        'https://images.unsplash.com/photo-1594484208280-efa00f96fc21?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1594484247201-e932ae3f9508?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1559599238-308997c787a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80'
+    ],
+    penthouse: [
+        'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80'
+    ],
+    brownstone: [
+        'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1582249522049-0f967baccf3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1580216367844-8a985c3a9769?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80'
+    ],
+    commercial: [
+        'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80'
+    ],
+    default: [
+        'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80',
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80'
+    ]
+};
+
 // Import all property images dynamically
 const importAll = (r) => {
     let images = {};
@@ -137,3 +181,16 @@ export const getPropertyGalleryImages = (property) => {
 
     return images;
 };
+
+/**
+ * Get high-quality property images based on property type
+ * @param {string} type - Property type (apartment, house, villa, etc.)
+ * @returns {Array<string>} - Array of high-quality image URLs
+ */
+export const getHighQualityPropertyImages = (type = 'default') => {
+    const normalizedType = typeof type === 'string' ? type.toLowerCase() : 'default';
+    return highQualityPropertyImages[normalizedType] || highQualityPropertyImages.default;
+};
+
+// Export the placeholder images for direct access if needed
+export { propertyTypePlaceholders, highQualityPropertyImages };

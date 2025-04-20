@@ -1,50 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropertyList from '../components/property/PropertyList';
-import Loading from '../components/common/Loading';
 import Layout from '../components/common/Layout';
-import { fetchProperties } from '../services/api';
-import { getPropertyGalleryImages } from '../utils/imageImports';
+import SEO from '../components/common/SEO';
+import { usePropertyContext } from '../context/PropertyContext';
 
 const PropertyListingPage = () => {
-    const [properties, setProperties] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const getProperties = async () => {
-            try {
-                const data = await fetchProperties();
-
-                // Add images to each property
-                const propertiesWithImages = data.map(property => {
-                    const images = getPropertyGalleryImages(property);
-                    return { ...property, images };
-                });
-
-                setProperties(propertiesWithImages);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        getProperties();
-    }, []);
-
-    if (loading) {
-        return <Loading />;
-    }
-
-    if (error) {
-        return <div className="text-red-500">Error: {error}</div>;
-    }
+    // Use the property context instead of direct API calls
+    const {
+        allProperties,
+        loading,
+        error,
+        refreshProperties
+    } = usePropertyContext();
 
     return (
         <Layout>
+            <SEO
+                title="Browse Properties - Find Your Dream Home"
+                description="Browse our extensive collection of properties for sale and rent."
+            />
             <div className="container mx-auto p-4">
-                <h1 className="text-2xl font-bold mb-4">Property Listings</h1>
-                <PropertyList properties={properties} />
+                <div className="text-center mb-10">
+                    <h1 className="text-3xl md:text-4xl font-bold mb-4">Explore Our Properties</h1>
+                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                        Discover a wide range of properties that fit your needs and budget.
+                    </p>
+                </div>
+
+                {/* Property filters could go here */}
+
+                <PropertyList
+                    properties={allProperties}
+                    loading={loading}
+                    error={error}
+                    retry={refreshProperties}
+                />
+
+                {!loading && !error && allProperties.length > 0 && (
+                    <div className="mt-12 text-center">
+                        <p className="text-gray-500">
+                            Showing {allProperties.length} properties
+                        </p>
+                    </div>
+                )}
             </div>
         </Layout>
     );

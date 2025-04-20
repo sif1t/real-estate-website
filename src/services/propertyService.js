@@ -3,7 +3,23 @@
 // eslint-disable-next-line no-unused-vars
 import { api } from './api';
 
+import {
+    fetchProperties as apiFetchProperties,
+    fetchPropertyById as apiFetchPropertyById,
+    setupRealTimeUpdates,
+    cleanupRealTimeUpdates
+} from './api';
+
+// Cache for properties to optimize performance
+let propertiesCache = {
+    all: null,
+    featured: null,
+    byId: {},
+    lastUpdate: null,
+};
+
 // Sample properties data for development and testing
+// eslint-disable-next-line no-unused-vars
 const sampleProperties = [
     {
         id: 'prop-001',
@@ -116,62 +132,22 @@ export const propertyService = {
     // Get all properties with optional filtering
     async getProperties(filters = {}) {
         try {
-            // In a real app, this would be an API call
-            // For now, we're using our sample data and filtering it
-            let properties = [...sampleProperties];
+            // Check cache first if no specific filters are applied
+            const isCacheable = Object.keys(filters).length === 0;
+            if (isCacheable && propertiesCache.all && Date.now() - propertiesCache.lastUpdate < 60000) { // 1 minute cache
+                return propertiesCache.all;
+            }
 
-            if (filters) {
-                // Search by query (search across multiple fields)
-                if (filters.searchQuery) {
-                    const query = filters.searchQuery.toLowerCase();
-                    properties = properties.filter(property =>
-                        property.title.toLowerCase().includes(query) ||
-                        property.description.toLowerCase().includes(query) ||
-                        property.location.toLowerCase().includes(query) ||
-                        property.type.toLowerCase().includes(query) ||
-                        property.status.toLowerCase().includes(query)
-                    );
-                }
+            // Fetch from API
+            const properties = await apiFetchProperties(filters);
 
-                // Apply filters
-                if (filters.propertyType && filters.propertyType !== 'Any') {
-                    properties = properties.filter(p => p.type === filters.propertyType.toLowerCase());
-                }
-
-                if (filters.status && filters.status !== 'Any') {
-                    properties = properties.filter(p => p.status === filters.status);
-                }
-
-                if (filters.minPrice) {
-                    properties = properties.filter(p => p.price >= filters.minPrice);
-                }
-
-                if (filters.maxPrice) {
-                    properties = properties.filter(p => p.price <= filters.maxPrice);
-                }
-
-                if (filters.bedrooms && filters.bedrooms !== 'Any') {
-                    const minBeds = parseInt(filters.bedrooms);
-                    properties = properties.filter(p => p.bedrooms >= minBeds);
-                }
-
-                if (filters.bathrooms && filters.bathrooms !== 'Any') {
-                    const minBaths = parseInt(filters.bathrooms);
-                    properties = properties.filter(p => p.bathrooms >= minBaths);
-                }
-
-                if (filters.location) {
-                    const location = filters.location.toLowerCase();
-                    properties = properties.filter(p =>
-                        p.location.toLowerCase().includes(location)
-                    );
-                }
+            // Update cache if no specific filters
+            if (isCacheable) {
+                propertiesCache.all = properties;
+                propertiesCache.lastUpdate = Date.now();
             }
 
             return properties;
-
-            // If we were using a real API:
-            // return await api.get('/properties', { params: filters });
         } catch (error) {
             console.error('Error fetching properties:', error);
             throw error;
@@ -181,18 +157,21 @@ export const propertyService = {
     // Get a single property by ID
     async getPropertyById(id) {
         try {
-            // In a real app, this would be an API call
-            // For now, return the property from our sample data
-            const property = sampleProperties.find(p => p.id === id);
-
-            if (!property) {
-                throw new Error('Property not found');
+            // Check cache first
+            if (propertiesCache.byId[id] && Date.now() - propertiesCache.byId[id].timestamp < 300000) { // 5 minute cache
+                return propertiesCache.byId[id].data;
             }
 
-            return property;
+            // Fetch from API
+            const property = await apiFetchPropertyById(id);
 
-            // If we were using a real API:
-            // return await api.get(`/properties/${id}`);
+            // Update cache
+            propertiesCache.byId[id] = {
+                data: property,
+                timestamp: Date.now()
+            };
+
+            return property;
         } catch (error) {
             console.error(`Error fetching property ${id}:`, error);
             throw error;
@@ -202,22 +181,99 @@ export const propertyService = {
     // Get featured properties
     async getFeaturedProperties(limit = 4) {
         try {
-            // For demo purposes, just return the first few properties
-            return sampleProperties.slice(0, limit);
+            // Check cache first
+            if (propertiesCache.featured && Date.now() - propertiesCache.lastUpdate < 60000) { // 1 minute cache
+                return propertiesCache.featured.slice(0, limit);
+            }
 
-            // If we were using a real API:
-            // return await api.get('/properties/featured', { params: { limit } });
+            // Fetch from API with featured filter
+            const properties = await apiFetchProperties({ featured: true, limit });
+
+            // Update cache
+            propertiesCache.featured = properties;
+            propertiesCache.lastUpdate = Date.now();
+
+            return properties;
         } catch (error) {
             console.error('Error fetching featured properties:', error);
             throw error;
         }
+    },
+
+    // Setup real-time property updates
+    setupRealTimePropertyUpdates(onUpdate) {
+        // Handler for property updates
+        const handlePropertyUpdate = (updatedProperties) => {
+            // Refresh the properties in cache
+            if (updatedProperties && updatedProperties.length > 0) {
+                // Update the 'all' cache if it exists
+                if (propertiesCache.all) {
+                    // Merge updated properties with existing cache
+                    const updatedIds = new Set(updatedProperties.map(p => p.id));
+                    propertiesCache.all = [
+                        ...propertiesCache.all.filter(p => !updatedIds.has(p.id)),
+                        ...updatedProperties
+                    ];
+                }
+
+                // Update the 'featured' cache if it exists
+                if (propertiesCache.featured) {
+                    const featuredUpdates = updatedProperties.filter(p => p.featured === true);
+                    if (featuredUpdates.length > 0) {
+                        const updatedIds = new Set(featuredUpdates.map(p => p.id));
+                        propertiesCache.featured = [
+                            ...propertiesCache.featured.filter(p => !updatedIds.has(p.id)),
+                            ...featuredUpdates
+                        ];
+                    }
+                }
+
+                // Update individual property cache entries
+                updatedProperties.forEach(property => {
+                    propertiesCache.byId[property.id] = {
+                        data: property,
+                        timestamp: Date.now()
+                    };
+                });
+
+                // Update timestamp
+                propertiesCache.lastUpdate = Date.now();
+
+                // Notify components of the update
+                if (onUpdate && typeof onUpdate === 'function') {
+                    onUpdate(updatedProperties);
+                }
+            }
+        };
+
+        // Setup real-time updates
+        setupRealTimeUpdates(handlePropertyUpdate, null, null);
+    },
+
+    // Clean up real-time property updates
+    cleanupRealTimePropertyUpdates() {
+        cleanupRealTimeUpdates();
+    },
+
+    // Invalidate cache to force fresh data
+    invalidateCache() {
+        propertiesCache = {
+            all: null,
+            featured: null,
+            byId: {},
+            lastUpdate: null
+        };
     }
 };
 
-// Add missing exported functions to match import statements in components
-export const fetchProperties = propertyService.getFeaturedProperties;
+// Export functions to match import statements in components
+export const fetchProperties = propertyService.getProperties;
 export const fetchPropertyDetails = propertyService.getPropertyById;
 export const fetchPropertyById = propertyService.getPropertyById;
 export const searchProperties = propertyService.getProperties;
+export const getFeaturedProperties = propertyService.getFeaturedProperties;
+export const setupPropertyUpdates = propertyService.setupRealTimePropertyUpdates;
+export const cleanupPropertyUpdates = propertyService.cleanupRealTimePropertyUpdates;
+export const invalidatePropertyCache = propertyService.invalidateCache;
 
 export default propertyService;

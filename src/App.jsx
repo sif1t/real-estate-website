@@ -1,12 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './routes';
+import { PropertyProvider } from './context/PropertyContext';
 
 const App = () => {
   return (
-    <Router>
-      <Routes />
-    </Router>
+    <PropertyProvider>
+      <Router>
+        <Routes />
+      </Router>
+    </PropertyProvider>
   );
 };
 

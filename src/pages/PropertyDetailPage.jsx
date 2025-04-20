@@ -1,45 +1,90 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PropertyDetails from '../components/property/PropertyDetails';
 import Loading from '../components/common/Loading';
-import { fetchPropertyById } from '../services/propertyService';
-import { getPropertyGalleryImages } from '../utils/imageImports';
+import Layout from '../components/common/Layout';
+import SEO from '../components/common/SEO';
+import { usePropertyContext } from '../context/PropertyContext';
+import NotFoundPage from './NotFoundPage';
 
 const PropertyDetailPage = () => {
     const { id } = useParams();
     const [property, setProperty] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [localLoading, setLocalLoading] = useState(true);
+    const [localError, setLocalError] = useState(null);
 
+    // Use the property context
+    const { getPropertyById } = usePropertyContext();
+
+    // Load the property data
     useEffect(() => {
-        const getProperty = async () => {
+        const loadProperty = async () => {
             try {
-                const data = await fetchPropertyById(id);
-
-                // Add gallery images to the property
-                const images = getPropertyGalleryImages(data);
-                const propertyWithImages = { ...data, images };
-
-                setProperty(propertyWithImages);
+                setLocalLoading(true);
+                const propertyData = await getPropertyById(id);
+                setProperty(propertyData);
+                setLocalError(null);
             } catch (err) {
-                setError(err.message);
+                console.error(`Error loading property ${id}:`, err);
+                setLocalError(err.message || "Failed to load property");
+                setProperty(null);
             } finally {
-                setLoading(false);
+                setLocalLoading(false);
             }
         };
 
-        getProperty();
-    }, [id]);
+        loadProperty();
+    }, [id, getPropertyById]);
 
-    if (loading) return <Loading />;
-    if (error) return <div>Error: {error}</div>;
-    if (!property) return <div>No property found.</div>;
+    if (localLoading) {
+        return (
+            <Layout>
+                <div className="container mx-auto p-4">
+                    <Loading />
+                </div>
+            </Layout>
+        );
+    }
+
+    if (localError) {
+        // If property not found, show the 404 page
+        if (localError.includes("not found")) {
+            return <NotFoundPage />;
+        }
+
+        // Otherwise show an error with retry option
+        return (
+            <Layout>
+                <div className="container mx-auto p-4 text-center">
+                    <div className="bg-red-50 p-6 rounded-lg">
+                        <h2 className="text-xl font-semibold text-red-600 mb-3">Error Loading Property</h2>
+                        <p className="text-gray-700 mb-4">{localError}</p>
+                        <button
+                            onClick={() => getPropertyById(id).then(setProperty).catch(err => setLocalError(err.message))}
+                            className="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark transition"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                </div>
+            </Layout>
+        );
+    }
+
+    if (!property) {
+        return <NotFoundPage />;
+    }
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">{property.title}</h1>
-            <PropertyDetails property={property} />
-        </div>
+        <Layout>
+            <SEO
+                title={`${property.title} | Real Estate Listing`}
+                description={property.description?.substring(0, 160) || `View details for ${property.title}`}
+            />
+            <div className="container mx-auto p-4">
+                <PropertyDetails property={property} />
+            </div>
+        </Layout>
     );
 };
 
