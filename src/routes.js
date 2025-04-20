@@ -30,15 +30,15 @@ const Routes = () => {
             <Route path="/properties" component={PropertyListingPage} />
             <Route path="/property/:id" component={PropertyDetailPage} />
             <Route path="/search" component={SearchResultsPage} />
-            
+
             {/* Auth routes */}
             <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />
             <Route path="/forgot-password" component={ForgotPasswordPage} />
-            
+
             {/* Protected routes - require authentication */}
             <PrivateRoute path="/profile" component={UserProfilePage} />
-            
+
             {/* Catch-all route */}
             <Route component={NotFoundPage} />
         </Switch>

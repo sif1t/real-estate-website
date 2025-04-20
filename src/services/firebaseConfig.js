@@ -6,13 +6,13 @@ import { getFirestore } from 'firebase/firestore';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
+    apiKey: "AIzaSyD_ixCnRJnnq3_mfm8ubLXx76i1Nt8g06M",
+    authDomain: "real-estate-website-5755b.firebaseapp.com",
+    projectId: "real-estate-website-5755b",
+    storageBucket: "real-estate-website-5755b.firebasestorage.app",
+    messagingSenderId: "863911254976",
+    appId: "1:863911254976:web:f68af59da08e8a40930625",
+    measurementId: "G-FCTD69V4BR"
 };
 
 // Initialize Firebase

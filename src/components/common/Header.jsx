@@ -33,7 +33,7 @@ const Header = () => {
                             Real Estate
                         </Link>
                     </div>
-                    
+
                     <nav className="hidden md:flex space-x-6">
                         <Link to="/" className="text-gray-600 hover:text-gray-900 transition-colors">Home</Link>
                         <Link to="/properties" className="text-gray-600 hover:text-gray-900 transition-colors">Properties</Link>
@@ -42,7 +42,7 @@ const Header = () => {
                         <Link to="/about" className="text-gray-600 hover:text-gray-900 transition-colors">About</Link>
                         <Link to="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">Contact</Link>
                     </nav>
-                    
+
                     <div className="flex items-center space-x-4">
                         {user ? (
                             <div className="relative">
@@ -55,12 +55,12 @@ const Header = () => {
                                     </span>
                                     <FaChevronDown className={`w-4 h-4 text-gray-600 transition-transform ${dropdownOpen ? 'transform rotate-180' : ''}`} />
                                 </button>
-                                
+
                                 {dropdownOpen && (
                                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
                                         <div className="py-1" role="menu" aria-orientation="vertical">
-                                            <Link 
-                                                to="/profile" 
+                                            <Link
+                                                to="/profile"
                                                 className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                 onClick={closeDropdown}
                                             >
@@ -80,14 +80,14 @@ const Header = () => {
                             </div>
                         ) : (
                             <div className="flex space-x-2">
-                                <Link 
-                                    to="/login" 
+                                <Link
+                                    to="/login"
                                     className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 transition"
                                 >
                                     Sign in
                                 </Link>
-                                <Link 
-                                    to="/register" 
+                                <Link
+                                    to="/register"
                                     className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition"
                                 >
                                     Register
