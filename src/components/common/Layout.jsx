@@ -1,6 +1,8 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import Advertisement from '../ads/Advertisement';
+import Notification from '../ads/Notification';
 
 const Layout = ({ children }) => {
     return (
@@ -8,6 +10,10 @@ const Layout = ({ children }) => {
             <Header />
             <main className="flex-grow">{children}</main>
             <Footer />
+
+            {/* Advertisement and notification components */}
+            <Advertisement />
+            <Notification />
         </div>
     );
 };
