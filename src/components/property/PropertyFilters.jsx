@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FaSearch } from 'react-icons/fa';
 
 const PropertyFilters = ({ filters, onChange, onReset, setFilters, className = '' }) => {
     const [localFilters, setLocalFilters] = useState(filters);
@@ -35,7 +36,8 @@ const PropertyFilters = ({ filters, onChange, onReset, setFilters, className = '
             bathrooms: 'Any',
             location: '',
             priceRange: [0, 2000000],
-            status: 'Any'
+            status: 'Any',
+            searchQuery: ''
         };
         setLocalFilters(emptyFilters);
 
@@ -52,6 +54,24 @@ const PropertyFilters = ({ filters, onChange, onReset, setFilters, className = '
             <h3 className="text-xl font-semibold mb-4">Filter Properties</h3>
 
             <form onSubmit={handleSubmit}>
+                {/* Search query field */}
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-medium mb-2">Search</label>
+                    <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <FaSearch className="h-4 w-4 text-gray-400" />
+                        </div>
+                        <input
+                            type="text"
+                            name="searchQuery"
+                            value={localFilters.searchQuery || ''}
+                            onChange={handleChange}
+                            placeholder="Keywords, property name, features..."
+                            className="w-full pl-10 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        />
+                    </div>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     <div>
                         <label className="block text-gray-700 text-sm font-medium mb-2">Property Type</label>

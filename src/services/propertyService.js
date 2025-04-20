@@ -121,6 +121,18 @@ export const propertyService = {
             let properties = [...sampleProperties];
 
             if (filters) {
+                // Search by query (search across multiple fields)
+                if (filters.searchQuery) {
+                    const query = filters.searchQuery.toLowerCase();
+                    properties = properties.filter(property =>
+                        property.title.toLowerCase().includes(query) ||
+                        property.description.toLowerCase().includes(query) ||
+                        property.location.toLowerCase().includes(query) ||
+                        property.type.toLowerCase().includes(query) ||
+                        property.status.toLowerCase().includes(query)
+                    );
+                }
+
                 // Apply filters
                 if (filters.propertyType && filters.propertyType !== 'Any') {
                     properties = properties.filter(p => p.type === filters.propertyType.toLowerCase());
