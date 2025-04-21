@@ -81,8 +81,10 @@ const PropertyCard = ({ property }) => {
     const handleImageError = () => {
         setImageError(true);
         const typeText = type?.toLowerCase() || 'property';
-        // Use our placeholders for fallback
-        setImageUrl(propertyTypePlaceholders[typeText] || propertyTypePlaceholders.default);
+        // Directly use unsplash URLs for fallback to ensure images load properly
+        const fallbackImage = propertyTypePlaceholders[typeText] || propertyTypePlaceholders.default;
+        console.log('Using fallback image:', fallbackImage);
+        setImageUrl(fallbackImage);
     };
 
     return (
@@ -102,6 +104,8 @@ const PropertyCard = ({ property }) => {
                                 alt={title}
                                 className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                                 onError={handleImageError}
+                                loading="lazy"
+                                crossOrigin="anonymous"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300 hover:opacity-100"></div>
                         </>

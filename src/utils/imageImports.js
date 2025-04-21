@@ -96,28 +96,35 @@ try {
 export const getPropertyImage = (property, index = 0) => {
     if (!property) return getPlaceholderImage('property');
 
-    const { id, type = 'property' } = property;
-    const typeKey = type.toLowerCase();
+    try {
+        const { id, type = 'property' } = property;
+        const typeKey = type.toLowerCase();
 
-    // Check if we have an image for this property type and ID
-    const imageKey = `${typeKey}-${id}${index > 0 ? `-${index}` : ''}.jpg`;
-    const backupImageKey = `${typeKey}-${id}.jpg`;
-    const genericTypeImageKey = `${typeKey}.jpg`;
+        // First check if property has images array
+        if (property.images && property.images.length > index) {
+            return property.images[index];
+        }
 
-    // Try to find the best match for the image
-    if (propertyImages[imageKey]) {
-        return propertyImages[imageKey];
-    } else if (propertyImages[backupImageKey]) {
-        return propertyImages[backupImageKey];
-    } else if (propertyImages[genericTypeImageKey]) {
-        return propertyImages[genericTypeImageKey];
-    } else if (property.images && property.images.length > index) {
-        // Use the image URL from the property data if available
-        return property.images[index];
+        // Check if we have an image for this property type and ID
+        const imageKey = `${typeKey}-${id}${index > 0 ? `-${index}` : ''}.jpg`;
+        const backupImageKey = `${typeKey}-${id}.jpg`;
+        const genericTypeImageKey = `${typeKey}.jpg`;
+
+        // Try to find the best match for the image
+        if (propertyImages[imageKey]) {
+            return propertyImages[imageKey];
+        } else if (propertyImages[backupImageKey]) {
+            return propertyImages[backupImageKey];
+        } else if (propertyImages[genericTypeImageKey]) {
+            return propertyImages[genericTypeImageKey];
+        }
+
+        // Fallback to placeholder images by type
+        return getPlaceholderImage(typeKey);
+    } catch (error) {
+        console.error('Error in getPropertyImage:', error);
+        return propertyTypePlaceholders.default;
     }
-
-    // Fallback to a placeholder
-    return getPlaceholderImage(typeKey);
 };
 
 /**

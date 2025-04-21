@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const PropertyGallery = ({ images = [] }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [imageLoadError, setImageLoadError] = useState({});
 
     // Fallback image if none provided
     const fallbackImage = 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&h=600&q=80';
@@ -25,14 +26,21 @@ const PropertyGallery = ({ images = [] }) => {
         setCurrentImageIndex(index);
     };
 
+    const handleImageError = (index) => {
+        setImageLoadError(prev => ({ ...prev, [index]: true }));
+    };
+
     return (
         <div className="property-gallery mb-8">
             {/* Main Image Display */}
             <div className="relative h-[400px] md:h-[500px] overflow-hidden rounded-lg shadow-md">
                 <img
-                    src={displayImages[currentImageIndex]}
+                    src={imageLoadError[currentImageIndex] ? fallbackImage : displayImages[currentImageIndex]}
                     alt={`Property view ${currentImageIndex + 1}`}
                     className="w-full h-full object-cover"
+                    onError={() => handleImageError(currentImageIndex)}
+                    loading="lazy"
+                    crossOrigin="anonymous"
                 />
 
                 {/* Navigation arrows - only show if more than one image */}
@@ -77,9 +85,12 @@ const PropertyGallery = ({ images = [] }) => {
                             onClick={() => goToImage(index)}
                         >
                             <img
-                                src={image}
+                                src={imageLoadError[index] ? fallbackImage : image}
                                 alt={`Thumbnail ${index + 1}`}
                                 className="w-full h-full object-cover"
+                                onError={() => handleImageError(index)}
+                                loading="lazy"
+                                crossOrigin="anonymous"
                             />
                         </div>
                     ))}
