@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropertyCard from '../property/PropertyCard';
 import Loading from '../common/Loading';
 import ApiError from '../common/ApiError';
+import CardStyleSelector from '../property/CardStyleSelector';
 import { usePropertyContext } from '../../context/PropertyContext';
 
 const FeaturedProperties = () => {
@@ -100,10 +101,13 @@ const FeaturedProperties = () => {
     return (
         <section className="py-12 bg-gray-50">
             <div className="container mx-auto px-4">
-                <div className="text-center mb-12">
+                <div className="text-center mb-8">
                     <h2 className="text-3xl md:text-4xl font-bold mb-3">Featured Properties</h2>
                     <p className="text-gray-600 max-w-2xl mx-auto">Explore our handpicked selection of premium properties available for sale and rent.</p>
                 </div>
+
+                {/* Add CardStyleSelector */}
+                <CardStyleSelector className="mb-8" />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {properties.map((property) => (

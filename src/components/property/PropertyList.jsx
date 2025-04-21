@@ -2,6 +2,7 @@ import React from 'react';
 import PropertyCard from './PropertyCard';
 import Loading from '../common/Loading';
 import ApiError from '../common/ApiError';
+import CardStyleSelector from './CardStyleSelector';
 
 const PropertyList = ({ properties, loading, error, retry }) => {
     if (loading) return <Loading />;
@@ -23,10 +24,13 @@ const PropertyList = ({ properties, loading, error, retry }) => {
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {properties.map(property => (
-                <PropertyCard key={property.id} property={property} />
-            ))}
+        <div>
+            <CardStyleSelector className="mb-6" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {properties.map(property => (
+                    <PropertyCard key={property.id} property={property} />
+                ))}
+            </div>
         </div>
     );
 };

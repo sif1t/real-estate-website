@@ -4,6 +4,7 @@ import SEO from '../components/common/SEO';
 import Layout from '../components/common/Layout';
 import { PropertyCardGrid } from '../components/property/PropertyCard';
 import PropertyFilters from '../components/property/PropertyFilters';
+import CardStyleSelector from '../components/property/CardStyleSelector';
 import propertyService from '../services/propertyService';
 import Loading from '../components/common/Loading';
 
@@ -152,12 +153,17 @@ const PropertiesPage = () => {
                         </div>
                     ) : (
                         <>
-                            <div className="mb-6 text-gray-600">
-                                Found {properties.length} properties
-                                {filters.location && ` in ${filters.location}`}
-                                {filters.propertyType !== 'Any' && ` of type ${filters.propertyType}`}
-                                {filters.status !== 'Any' && ` ${filters.status.toLowerCase()}`}
-                                {filters.searchQuery && ` matching "${filters.searchQuery}"`}
+                            <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
+                                <div className="text-gray-600 mb-4 md:mb-0">
+                                    Found {properties.length} properties
+                                    {filters.location && ` in ${filters.location}`}
+                                    {filters.propertyType !== 'Any' && ` of type ${filters.propertyType}`}
+                                    {filters.status !== 'Any' && ` ${filters.status.toLowerCase()}`}
+                                    {filters.searchQuery && ` matching "${filters.searchQuery}"`}
+                                </div>
+
+                                {/* Card Style Selector */}
+                                <CardStyleSelector />
                             </div>
                             <PropertyCardGrid properties={properties} />
                         </>
