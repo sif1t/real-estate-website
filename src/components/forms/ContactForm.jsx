@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const ContactForm = () => {
     const [name, setName] = useState('');
@@ -9,6 +10,34 @@ const ContactForm = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
+    const location = useLocation();
+
+    // Set the subject based on URL parameter when component mounts
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const serviceParam = params.get('service');
+
+        if (serviceParam) {
+            switch (serviceParam.toLowerCase()) {
+                case 'selling':
+                    setSubject('Property Selling');
+                    break;
+                case 'management':
+                    setSubject('Property Management');
+                    // Add Property Management as a subject option if not available
+                    break;
+                case 'rental':
+                    setSubject('Property Rental');
+                    break;
+                case 'buying':
+                    setSubject('Property Buying');
+                    break;
+                default:
+                    // Do nothing, keep default subject
+                    break;
+            }
+        }
+    }, [location]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -124,6 +153,8 @@ const ContactForm = () => {
                         <option value="General Inquiry">General Inquiry</option>
                         <option value="Property Buying">Property Buying</option>
                         <option value="Property Selling">Property Selling</option>
+                        <option value="Property Rental">Property Rental</option>
+                        <option value="Property Management">Property Management</option>
                         <option value="Property Valuation">Property Valuation</option>
                         <option value="Other">Other</option>
                     </select>
